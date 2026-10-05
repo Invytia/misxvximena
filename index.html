@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV Años - Ximena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta Floral basada en la imagen proporcionada */
+            --floral-pink: #d63266;
+            --floral-green: #9fa830;
+            --floral-blue: #6c82c6;
+            --floral-orange: #f3892d;
+            
+            --text-dark: #2A2A2A;      
+            --text-muted: #4A4A4A;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* FONDO GLOBAL */
+        body {
+            background-image: url('assets/fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Destellos Animados */
+        .sparkle {
+            position: fixed;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: twinkle 3s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 500;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* --- REPRODUCTOR DE MÚSICA (STICKY) --- */
+        .sticky-music-btn {
+            position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px;
+            background-color: var(--floral-pink); border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(214, 50, 102, 0.5);
+            z-index: 2000; cursor: pointer; opacity: 0; visibility: hidden;
+            transform: translateY(20px) scale(0.9); transition: all 0.6s var(--transition-smooth);
+            border: 2px solid rgba(255,255,255,0.5); outline: none; backdrop-filter: blur(5px);
+        }
+        body.content-active .sticky-music-btn { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .sticky-music-btn:hover { transform: scale(1.1); background-color: var(--floral-orange); }
+        .sticky-music-btn svg { width: 22px; height: 22px; fill: #fff; }
+
+        /* --- SOBRE (SIN CAPA OSCURA) --- */
+        #envelope-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1.2s ease-in-out, visibility 1.2s;
+            /* Se hace transparente para heredar el fondo del body */
+            background-color: transparent; 
+        }
+        #envelope-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .envelope-text-container {
+            text-align: center; margin-bottom: 50px; animation: floatText 4s ease-in-out infinite;
+            position: relative; z-index: 10;
+            background: var(--glass-bg); padding: 20px 40px; border-radius: 20px;
+            backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .env-tag { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 8px; text-transform: uppercase; color: var(--floral-blue); font-weight: 600; }
+        .env-title { font-family: 'Pinyon Script', cursive; font-size: 85px; color: var(--floral-pink); line-height: 1.2; margin-top: 5px; text-shadow: 2px 2px 4px rgba(255,255,255,0.5); }
+
+        .envelope-wrapper { position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth); z-index: 10; }
+        .envelope-wrapper:hover { transform: translateY(-8px); }
+
+        /* Diseño de sobre translúcido/glass */
+        .envelope {
+            position: relative; width: 320px; height: 210px; border-radius: 10px;
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 1px solid var(--glass-border);
+        }
+        .envelope::before {
+            content: ''; position: absolute; top: 0; right: 0;
+            border-right: 160px solid rgba(255, 255, 255, 0.5); border-top: 105px solid transparent;
+            border-bottom: 105px solid rgba(255, 255, 255, 0.5); z-index: 2; border-radius: 0 10px 10px 0;
+        }
+        .envelope::after {
+            content: ''; position: absolute; top: 0; left: 0;
+            border-left: 160px solid rgba(255, 255, 255, 0.6); border-top: 105px solid transparent;
+            border-bottom: 105px solid rgba(255, 255, 255, 0.6); z-index: 2; border-radius: 10px 0 0 10px;
+        }
+        .front-flap {
+            position: absolute; top: 0; left: 0; border-left: 160px solid transparent; border-right: 160px solid transparent;
+            border-top: 115px solid rgba(255, 255, 255, 0.7); transform-origin: top; transition: transform 0.9s var(--transition-smooth); z-index: 4;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+        .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
+
+        .wax-seal {
+            position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
+            width: 50px; height: 50px; background-color: var(--floral-pink);
+            border-radius: 50%; z-index: 5; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 15px rgba(214, 50, 102, 0.4); border: 2px solid #fff;
+            transition: opacity 0.5s ease 0.1s, transform 0.5s ease;
+        }
+        .wax-seal svg { width: 25px; height: 25px; fill: #fff; }
+        .envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0.5); pointer-events: none; }
+
+        .hint-text {
+            text-align: center; font-size: 13px; font-weight: 600; text-transform: uppercase; 
+            letter-spacing: 4px; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            margin-top: 40px; animation: pulse 2.5s infinite; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; backdrop-filter: blur(5px);
+        }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes floatText { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        #main-invitation { display: none; width: 100%; flex-direction: column; align-items: center; opacity: 0; animation: fadeInMain 2s forwards 0.3s; padding: 40px 15px; }
+        body.content-active #main-invitation { display: flex; }
+        @keyframes fadeInMain { to { opacity: 1; } }
+
+        /* Animaciones */
+        .anim-element { opacity: 0; transition: all 1.2s var(--transition-smooth); position: relative; z-index: 2; }
+        .anim-fade-up { transform: translateY(50px); }
+        .anim-fade-up.in-view { opacity: 1; transform: translateY(0); }
+        .anim-zoom { transform: scale(0.85); }
+        .anim-zoom.in-view { opacity: 1; transform: scale(1); }
+        .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.25s; } .delay-3 { transition-delay: 0.4s; } .delay-4 { transition-delay: 0.55s; }
+
+        /* GLASSMORPHISM CARDS */
+        .glass-card {
+            width: 100%; max-width: 600px; padding: 60px 30px; margin-bottom: 50px;
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 25px; border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); text-align: center;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* Tipografía */
+        .tag-line { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 6px; text-transform: uppercase; color: var(--floral-green); margin-bottom: 20px; font-weight: 600; }
+        .title-script { font-family: 'Pinyon Script', cursive; font-size: 90px; color: var(--floral-pink); margin-bottom: 10px; line-height: 1.1; font-weight: 400; text-shadow: 2px 2px 5px rgba(255,255,255,0.8); }
+        .cursive-name { font-family: 'Pinyon Script', cursive; font-size: 45px; color: var(--floral-blue); font-weight: 400; margin: 10px 0; line-height: 1.2;}
+        .body-serif { font-family: 'Cormorant Garamond', serif; font-size: 24px; line-height: 1.5; color: var(--text-dark); font-weight: 500; }
+        
+        .line-divider { width: 2px; height: 60px; background: linear-gradient(to bottom, transparent, var(--floral-green), transparent); margin: 30px auto; }
+        .line-horizontal { width: 80px; height: 2px; background: linear-gradient(to right, transparent, var(--floral-blue), transparent); margin: 40px auto; }
+
+        .info-title { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 4px; text-transform: uppercase; color: var(--floral-orange); margin-bottom: 15px; font-weight: 600; }
+        .info-data { font-family: 'Cormorant Garamond', serif; font-size: 34px; color: var(--text-dark); margin-bottom: 5px; font-weight: 600; line-height: 1.3; }
+
+        /* Botones */
+        .btn-solid {
+            display: inline-block; background-color: var(--floral-blue); color: #fff;
+            padding: 18px 40px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; border-radius: 30px;
+            transition: all 0.4s ease; margin-top: 30px; position: relative; z-index: 5; box-shadow: 0 8px 20px rgba(108, 130, 198, 0.4);
+        }
+        .btn-solid:hover { background-color: var(--floral-pink); transform: translateY(-4px); box-shadow: 0 12px 25px rgba(214, 50, 102, 0.5); }
+        
+        .btn-accent { background-color: var(--floral-orange); box-shadow: 0 8px 20px rgba(243, 137, 45, 0.4); }
+        .btn-accent:hover { background-color: var(--floral-green); }
+
+        /* Countdown */
+        .countdown-wrapper { display: flex; justify-content: center; gap: 15px; margin: 30px 0; width: 100%; }
+        .count-box { background: rgba(255,255,255,0.8); padding: 15px 10px; border-radius: 15px; min-width: 75px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--glass-border); }
+        .count-num { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--floral-pink); font-weight: 600; line-height: 1; }
+        .count-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--floral-green); font-weight: 600; margin-top: 5px; }
+
+        /* Itinerario */
+        .timeline { width: 100%; text-align: left; margin-top: 20px; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: rgba(108, 130, 198, 0.3); }
+        .time-item { position: relative; padding-left: 45px; margin-bottom: 25px; }
+        .time-item::before { content: ''; position: absolute; left: 10px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--floral-pink); border: 3px solid #fff; box-shadow: 0 0 10px rgba(214, 50, 102, 0.4); }
+        .time-hour { font-family: 'Cinzel', serif; font-size: 16px; color: var(--floral-blue); font-weight: 600; }
+        .time-desc { font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-dark); margin-top: 5px; font-weight: 500; line-height: 1.4; }
+
+        /* Mapas */
+        .map-box { width: 100%; height: 350px; margin: 30px auto; overflow: hidden; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 3px solid #fff; position: relative; z-index: 2; }
+        .map-box iframe { width: 100%; height: 100%; border: none; }
+
+        /* Formularios RSVP */
+        .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; position: relative; z-index: 2; }
+        .input-line {
+            width: 100%; padding: 18px 20px; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; outline: none; border-radius: 12px;
+            text-align: center; transition: all 0.4s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .input-line:focus { border-color: var(--floral-pink); background: #fff; box-shadow: 0 5px 15px rgba(214, 50, 102, 0.1); }
+        textarea.input-line { resize: vertical; min-height: 100px; }
+        select.input-line { appearance: none; cursor: pointer; }
+
+        /* Boleto VIP */
+        .ticket-card {
+            width: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            padding: 40px 20px; border-radius: 20px; border: 2px dashed var(--floral-orange);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08); margin: 30px 0;
+        }
+
+        @media (max-width: 480px) {
+            .env-title { font-size: 70px; }
+            .title-script { font-size: 75px; }
+            .glass-card { padding: 40px 20px; border-radius: 20px; }
+            .count-num { font-size: 28px; }
+            .count-box { min-width: 65px; padding: 10px; }
+            .map-box { height: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO -->
+    <audio id="bg-music" src="assets/song.mp3" loop></audio>
+
+    <!-- STICKY MUSIC BTN -->
+    <button id="music-btn" class="sticky-music-btn" onclick="toggleMusic()" aria-label="Controlar música">
+        <svg id="music-icon-play" style="display:none;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="music-icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
+    <!-- SOBRE -->
+    <div id="envelope-screen">
+        <div class="envelope-text-container">
+            <div class="env-tag">Mis XV Años</div>
+            <h1 class="env-title">Ximena</h1>
+        </div>
+
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="front-flap"></div>
+            <div class="wax-seal">
+                <svg viewBox="0 0 24 24"><path d="M12 2L15 9H22L16.5 13.5L18.5 21L12 17L5.5 21L7.5 13.5L2 9H9L12 2Z"/></svg>
+            </div>
+            <div class="envelope"></div>
+        </div>
+        <div class="hint-text">Tocar para abrir</div>
+    </div>
+
+    <!-- MAIN INVITATION -->
+    <main id="main-invitation">
+        
+        <!-- Portada -->
+        <section class="glass-card anim-element anim-zoom">
+            <div class="tag-line delay-1">Mis XV Años</div>
+            <h1 class="title-script delay-2">Ximena</h1>
+            <div class="line-divider delay-3"></div>
+            <p class="body-serif delay-4">
+                "Hay momentos inolvidables que se atesoran en el corazón para siempre, y el día de hoy quiero compartir la magia de este momento contigo."
+            </p>
+        </section>
+
+        <!-- Fecha y Cuenta Regresiva -->
+        <section class="glass-card anim-element anim-fade-up">
+            <div class="info-title delay-1">El gran día</div>
+            <div class="info-data delay-2" style="font-size: 42px;">14 de Noviembre</div>
+            <div class="info-data delay-2" style="color: var(--floral-pink); font-size: 30px;">2026 • 14:00 Hrs</div>
+
+            <div class="countdown-wrapper delay-3">
+                <div class="count-box"><div class="count-num" id="cd-days">00</div><div class="count-label">Días</div></div>
+                <div class="count-box"><div class="count-num" id="cd-hours">00</div><div class="count-label">Hrs</div></div>
+                <div class="count-box"><div class="count-num" id="cd-mins">00</div><div class="count-label">Min</div></div>
+                <div class="count-box"><div class="count-num" id="cd-secs">00</div><div class="count-label">Seg</div></div>
+            </div>
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Ximena&dates=20261114T200000Z/20261115T020000Z&details=Celebremos+juntos+los+XV+A%C3%B1os+de+Ximena+en+Hacienda+La+Esmeralda." target="_blank" class="btn-solid delay-4">Agendar Evento</a>
+        </section>
+
+        <!-- Familia -->
+        <section class="glass-card anim-element anim-zoom">
+            <div class="info-title delay-1">Con la bendición de mis padres</div>
+            <div class="cursive-name delay-2">Miriam Hernández</div>
+            <div style="font-family: 'Cinzel'; font-size: 20px; color: var(--floral-orange); margin: 5px 0;">&</div>
+            <div class="cursive-name delay-2">Uriel López</div>
+            
+            <div class="line-horizontal delay-3"></div>
+            
+            <div class="info-title delay-4">Y mis Padrinos</div>
+            <div class="cursive-name delay-4">Octavio López</div>
+            <div style="font-family: 'Cinzel'; font-size: 20px; color: var(--floral-orange); margin: 5px 0;">&</div>
+            <div class="cursive-name delay-4">Mariana Monroy</div>
+        </section>
+
+        <!-- Ubicación -->
+        <section class="glass-card anim-element anim-fade-up">
+            <div class="info-title delay-1">Recepción</div>
+            <div class="info-data delay-2" style="font-size: 38px;">Hacienda La Esmeralda</div>
+            
+            <div class="map-box delay-3">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4094.765524520909!2d-99.1419112!3d19.273514600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce011e9d0ed57d%3A0x6cde37db15c530fa!2sHacienda%20La%20Esmeralda%20-%20Eventos%20en%20CDMX!5e1!3m2!1ses-419!2smx!4v1791238606841!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/4Ng7Jij39QAVsV376" target="_blank" class="btn-solid delay-4">Ver en Maps</a>
+        </section>
+
+        <!-- Itinerario -->
+        <section class="glass-card anim-element anim-zoom">
+            <div class="info-title delay-1">Programa del Evento</div>
+            <div class="info-data delay-2">Itinerario</div>
+            
+            <div class="timeline delay-3">
+                <div class="time-item"><div class="time-hour">13:30 Hrs</div><div class="time-desc">Ingreso de invitados al jardín</div></div>
+                <div class="time-item"><div class="time-hour">14:00 - 14:30 Hrs</div><div class="time-desc">Misa con el Padre</div></div>
+                <div class="time-item"><div class="time-hour">14:30 - 15:00 Hrs</div><div class="time-desc">Cócteles de bienvenida y acomodo</div></div>
+                <div class="time-item"><div class="time-hour">15:00 - 16:00 Hrs</div><div class="time-desc">Comida con Saxofonista</div></div>
+                <div class="time-item"><div class="time-hour">16:00 - 17:00 Hrs</div><div class="time-desc">DJ Música Bailable</div></div>
+                <div class="time-item"><div class="time-hour">17:00 - 18:00 Hrs</div><div class="time-desc">Brindis, Partida del Pastel y Vals</div></div>
+                <div class="time-item"><div class="time-hour">18:00 - 19:00 Hrs</div><div class="time-desc">Batucada</div></div>
+                <div class="time-item"><div class="time-hour">19:00 - 20:00 Hrs</div><div class="time-desc">Tornafiesta (DJ Música Versátil / Karaoke)</div></div>
+                <div class="time-item"><div class="time-hour">20:00 Hrs</div><div class="time-desc">Salida de Invitados</div></div>
+            </div>
+        </section>
+
+        <!-- Dress Code -->
+        <section class="glass-card anim-element anim-fade-up">
+            <div class="info-title delay-1">Dress Code</div>
+            <div class="info-data delay-2" style="font-family: 'Cinzel', serif; font-size: 38px; letter-spacing: 5px; color: var(--floral-pink);">
+                FORMAL
+            </div>
+            <div class="line-divider delay-3" style="height: 40px;"></div>
+            <p class="body-serif delay-4" style="color: var(--text-muted); font-size: 22px;">
+                Para mantener la elegancia de la noche, se solicita amablemente <strong>reservar el color rosa exclusivamente para la quinceañera.</strong>
+            </p>
+        </section>
+
+        <!-- Mesa de Regalos -->
+        <section class="glass-card anim-element anim-zoom">
+            <div class="info-title delay-1">Mesa de Regalos</div>
+            <svg class="delay-2" viewBox="0 0 24 24" style="width: 50px; height: 50px; fill: var(--floral-pink); margin: 15px 0;">
+                <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <div class="info-data delay-3">Liverpool</div>
+            <p class="body-serif delay-4" style="margin-top: 15px; font-size: 22px;">
+                El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, puedes buscar nuestra mesa de regalos.
+            </p>
+            <div class="delay-4" style="margin-top: 25px; font-size: 18px; font-weight: 600; color: var(--floral-blue);">
+                Número de Evento: 52024161
+            </div>
+            <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/52024161" target="_blank" class="btn-solid btn-accent delay-4">Ver Mesa de Regalos</a>
+        </section>
+
+        <!-- Galería -->
+        <section class="glass-card anim-element anim-fade-up">
+            <div class="info-title delay-1">Momentos</div>
+            <div class="info-data delay-2">Galería en Vivo</div>
+            <p class="body-serif delay-3" style="margin: 20px auto;">
+                Captura la magia de este día. Comparte todas las fotos y videos que tomes directamente en nuestro álbum digital.
+            </p>
+            <a href="https://drive.google.com/drive/folders/1ed8oOYqTBvbqCOMcD-jzLntfRg1INgQ9?usp=sharing" target="_blank" class="btn-solid delay-4">Subir mis Fotos</a>
+        </section>
+
+        <!-- RSVP y Pases -->
+        <section class="glass-card anim-element anim-zoom" style="margin-bottom: 0;">
+            
+            <!-- Pases Dinámicos Invytia -->
+            <div id="pases-section" style="display: none; width: 100%;">
+                <div class="info-title delay-1">Acceso al Evento</div>
+                <div class="ticket-card delay-2">
+                    <div class="tag-line" style="margin-bottom: 15px; color: var(--floral-pink);">Pase Exclusivo</div>
+                    <div class="body-serif" style="font-size: 22px; margin-bottom: 5px;">Pases Asignados</div>
+                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 70px; font-weight: 600; color: var(--floral-blue); line-height: 1;">
+                        0
+                    </div>
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 20px;">
+                        Muestra esta pantalla en recepción
+                    </div>
+                </div>
+                <div class="line-horizontal delay-3" style="margin: 50px auto;"></div>
+            </div>
+
+            <div class="info-title delay-1">RSVP</div>
+            <div class="info-data delay-2">Confirmar Asistencia</div>
+            <p class="body-serif delay-3" style="margin: 15px auto 30px auto;">
+                Agradecemos tu confirmación antes del<br><strong style="color: var(--floral-pink);">31 de Octubre</strong>
+            </p>
+
+            <div class="form-group delay-4">
+                <input type="text" id="rsvp-name" class="input-line" placeholder="Escribe tu nombre y apellido">
+            </div>
+            <div class="form-group delay-4">
+                <select id="rsvp-status" class="input-line">
+                    <option value="" disabled selected>¿Nos acompañarás?</option>
+                    <option value="yes">Con gusto asistiré</option>
+                    <option value="no">No me será posible asistir</option>
+                </select>
+            </div>
+            
+            <!-- Cantidad Asistentes -->
+            <div class="form-group delay-4">
+                <select id="rsvp-guests" class="input-line" style="display: none;">
+                    <!-- Se llena con JS basado en los pases -->
+                </select>
+            </div>
+            
+            <button onclick="sendRSVP()" class="btn-solid btn-accent delay-4" style="margin-bottom: 50px; width: 100%; max-width: 300px;">Enviar Confirmación</button>
+
+            <div class="line-divider delay-1" style="height: 30px; margin-bottom: 40px;"></div>
+
+            <div class="info-title delay-1">Mensajes</div>
+            <div class="info-data delay-2">Muro de los Deseos</div>
+            <div class="form-group delay-3" style="margin-top: 30px;">
+                <textarea id="wish-message" class="input-line" placeholder="Deja un lindo mensaje para Ximena..."></textarea>
+            </div>
+            <button onclick="sendWish()" class="btn-solid delay-4">Enviar Mensaje</button>
+        </section>
+
+    </main>
+
+    <script>
+        // --- CREADOR DE DESTELLOS ---
+        function createSparkles() {
+            for(let i=0; i<15; i++) {
+                let sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.width = Math.random() * 6 + 2 + 'px';
+                sparkle.style.height = sparkle.style.width;
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(sparkle);
+            }
+        }
+        createSparkles();
+
+        // --- CONTROL DE AUDIO ---
+        let isMusicPlaying = false;
+        const bgMusic = document.getElementById('bg-music');
+        const playIcon = document.getElementById('music-icon-play');
+        const pauseIcon = document.getElementById('music-icon-pause');
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause(); playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
+            } else {
+                bgMusic.play(); playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // --- ANIMACIÓN INICIAL ---
+        function openEnvelope() {
+            const wrapper = document.querySelector('.envelope-wrapper');
+            const screen = document.getElementById('envelope-screen');
+            wrapper.classList.add('open');
+            
+            setTimeout(() => {
+                screen.classList.add('fade-out');
+                document.body.classList.add('content-active');
+                
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true; playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
+                }).catch(e => {
+                    console.log("Autoplay bloqueado.");
+                    isMusicPlaying = false; playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
+                });
+            }, 1000);
+        }
+
+        // --- OBSERVER ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.anim-element').forEach(el => observer.observe(el));
+        });
+
+        // --- CUENTA REGRESIVA ---
+        const countDownDate = new Date("Nov 14, 2026 14:00:00").getTime();
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("cd-days").innerHTML = days < 10 ? '0'+days : days;
+            document.getElementById("cd-hours").innerHTML = hours < 10 ? '0'+hours : hours;
+            document.getElementById("cd-mins").innerHTML = minutes < 10 ? '0'+minutes : minutes;
+            document.getElementById("cd-secs").innerHTML = seconds < 10 ? '0'+seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.querySelector(".countdown-wrapper").innerHTML = "<div class='info-data' style='color:var(--floral-pink);'>¡Ha llegado el gran día!</div>";
+            }
+        }, 1000);
+
+        // --- SISTEMA DE PASES INVYTIA ---
+        const urlParams = new URLSearchParams(window.location.search);
+        let pasesAsignados = parseInt(urlParams.get('p')) || parseInt(urlParams.get('pases')) || 0;
+        const whatsAppNum = "525563531208"; 
+
+        if (pasesAsignados > 0) {
+            document.getElementById('pases-section').style.display = 'block';
+            document.getElementById('ticket-count').innerText = pasesAsignados;
+        }
+
+        const rsvpStatus = document.getElementById("rsvp-status");
+        const rsvpGuests = document.getElementById("rsvp-guests");
+
+        rsvpStatus.addEventListener('change', (e) => {
+            if(e.target.value === 'yes') {
+                if(pasesAsignados > 0) {
+                    rsvpGuests.style.display = 'block';
+                    rsvpGuests.innerHTML = '<option value="" disabled selected>¿Cuántas personas asisten?</option>';
+                    for(let i = 1; i <= pasesAsignados; i++) {
+                        rsvpGuests.innerHTML += `<option value="${i}">${i} persona${i > 1 ? 's' : ''}</option>`;
+                    }
+                } else {
+                    // Si entra sin pases numéricos, permitir campo libre (opcional)
+                    rsvpGuests.style.display = 'none';
+                    rsvpGuests.value = "1"; // default
+                }
+            } else {
+                rsvpGuests.style.display = 'none';
+                rsvpGuests.value = "";
+            }
+        });
+
+        // --- WHATSAPP LOGIC ---
+        function sendRSVP() {
+            const name = document.getElementById("rsvp-name").value.trim();
+            const status = document.getElementById("rsvp-status").value;
+            let guests = rsvpGuests.value;
+            
+            if (!name || !status) {
+                alert("Por favor, ingresa tu nombre y selecciona una opción."); return;
+            }
+            if (status === "yes" && pasesAsignados > 0 && !guests) {
+                alert("Por favor, indica cuántas personas asistirán."); return;
+            }
+            
+            guests = guests || "1"; // Default si no hay pases asignados en URL
+            let message = status === "yes" 
+                ? `¡Hola! Soy ${name}. Sí, confirmo con gusto mi asistencia a los XV años de Ximena. Seremos ${guests} persona(s) en total.`
+                : `¡Hola! Soy ${name}. Lamentablemente no me será posible asistir a los XV años de Ximena. Agradezco mucho la invitación.`;
+            
+            window.open(`https://wa.me/${whatsAppNum}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function sendWish() {
+            let name = document.getElementById("rsvp-name").value.trim();
+            const wish = document.getElementById("wish-message").value.trim();
+            
+            if (!wish) { alert("Por favor escribe tu mensaje."); return; }
+            if (!name) name = "Un invitado";
+
+            const message = `Hola Ximena, soy ${name}. Te envío este mensaje con mucho cariño:\n\n"${wish}"`;
+            window.open(`https://wa.me/${whatsAppNum}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
