@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis XV Años - Ximena</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta Floral basada en la imagen proporcionada */
+            /* Paleta Floral */
             --floral-pink: #d63266;
             --floral-green: #9fa830;
             --floral-blue: #6c82c6;
@@ -15,8 +15,8 @@
             
             --text-dark: #2A2A2A;      
             --text-muted: #4A4A4A;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.85); /* Opacidad ajustada para perfecta legibilidad */
+            --glass-border: rgba(255, 255, 255, 0.6);
             --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -32,9 +32,8 @@
             background-color: transparent;
         }
 
-        /* FONDO FIJO AL TAMAÑO DE LA PANTALLA (NO EXTENDIDO) */
-        body::before {
-            content: "";
+        /* FONDO FIJO SEGURO (Mantiene proporción y no desaparece) */
+        #fixed-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -45,7 +44,6 @@
             background-position: center;
             background-repeat: no-repeat;
             z-index: -10;
-            pointer-events: none;
         }
 
         /* Destellos Animados */
@@ -70,13 +68,13 @@
             justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(214, 50, 102, 0.5);
             z-index: 2000; cursor: pointer; opacity: 0; visibility: hidden;
             transform: translateY(20px) scale(0.9); transition: all 0.6s var(--transition-smooth);
-            border: 2px solid rgba(255,255,255,0.5); outline: none; backdrop-filter: blur(5px);
+            border: 2px solid rgba(255,255,255,0.7); outline: none;
         }
         body.content-active .sticky-music-btn { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
         .sticky-music-btn:hover { transform: scale(1.1); background-color: var(--floral-orange); }
         .sticky-music-btn svg { width: 22px; height: 22px; fill: #fff; }
 
-        /* --- SOBRE (SIN CAPA OSCURA) --- */
+        /* --- SOBRE INICIAL --- */
         #envelope-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -86,23 +84,29 @@
         #envelope-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 
         .envelope-text-container {
-            text-align: center; margin-bottom: 50px; animation: floatText 4s ease-in-out infinite;
+            text-align: center; margin-bottom: 40px; animation: floatText 4s ease-in-out infinite;
             position: relative; z-index: 10;
-            background: var(--glass-bg); padding: 20px 40px; border-radius: 20px;
-            backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 45%, transparent 70%);
+            padding: 50px 30px; border-radius: 50%;
         }
 
-        .env-tag { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 8px; text-transform: uppercase; color: var(--floral-blue); font-weight: 600; }
-        .env-title { font-family: 'Pinyon Script', cursive; font-size: 85px; color: var(--floral-pink); line-height: 1.2; margin-top: 5px; text-shadow: 2px 2px 4px rgba(255,255,255,0.5); }
+        .env-tag { 
+            font-family: 'Cinzel', serif; font-size: 18px; letter-spacing: 12px; 
+            text-transform: uppercase; color: var(--floral-blue); font-weight: 700;
+            -webkit-text-stroke: 0.5px #ffffff; text-shadow: 0px 4px 15px rgba(255,255,255,1);
+        }
+        .env-title { 
+            font-family: 'Pinyon Script', cursive; font-size: 110px; color: var(--floral-pink); 
+            line-height: 1.1; margin-top: 5px; -webkit-text-stroke: 1px #ffffff;
+            text-shadow: 0px 5px 20px rgba(255,255,255,1), 2px 2px 5px rgba(0,0,0,0.15); 
+        }
 
-        .envelope-wrapper { position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth); z-index: 10; }
+        .envelope-wrapper { position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth); z-index: 10; margin-bottom: 20px; }
         .envelope-wrapper:hover { transform: translateY(-8px); }
 
-        /* Diseño de sobre translúcido/glass */
         .envelope {
             position: relative; width: 320px; height: 210px; border-radius: 10px;
-            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 1px solid var(--glass-border);
         }
         .envelope::before {
@@ -112,12 +116,12 @@
         }
         .envelope::after {
             content: ''; position: absolute; top: 0; left: 0;
-            border-left: 160px solid rgba(255, 255, 255, 0.6); border-top: 105px solid transparent;
-            border-bottom: 105px solid rgba(255, 255, 255, 0.6); z-index: 2; border-radius: 10px 0 0 10px;
+            border-left: 160px solid rgba(255, 255, 255, 0.7); border-top: 105px solid transparent;
+            border-bottom: 105px solid rgba(255, 255, 255, 0.7); z-index: 2; border-radius: 10px 0 0 10px;
         }
         .front-flap {
             position: absolute; top: 0; left: 0; border-left: 160px solid transparent; border-right: 160px solid transparent;
-            border-top: 115px solid rgba(255, 255, 255, 0.7); transform-origin: top; transition: transform 0.9s var(--transition-smooth); z-index: 4;
+            border-top: 115px solid rgba(255, 255, 255, 0.8); transform-origin: top; transition: transform 0.9s var(--transition-smooth); z-index: 4;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
         .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
@@ -126,22 +130,28 @@
             position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
             width: 50px; height: 50px; background-color: var(--floral-pink);
             border-radius: 50%; z-index: 5; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 15px rgba(214, 50, 102, 0.4); border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(214, 50, 102, 0.5); border: 2px solid #fff;
             transition: opacity 0.5s ease 0.1s, transform 0.5s ease;
         }
         .wax-seal svg { width: 25px; height: 25px; fill: #fff; }
         .envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0.5); pointer-events: none; }
 
         .hint-text {
-            text-align: center; font-size: 13px; font-weight: 600; text-transform: uppercase; 
-            letter-spacing: 4px; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            margin-top: 40px; animation: pulse 2.5s infinite; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; backdrop-filter: blur(5px);
+            text-align: center; font-size: 13px; font-weight: 700; text-transform: uppercase; 
+            letter-spacing: 4px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-top: 10px; animation: pulse 2.5s infinite; 
+            background: rgba(184, 137, 103, 0.95); padding: 12px 28px; border-radius: 30px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes pulse { 0% { opacity: 0.8; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0.8; transform: scale(1); } }
         @keyframes floatText { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
 
         /* --- CONTENIDO PRINCIPAL --- */
-        #main-invitation { display: none; width: 100%; flex-direction: column; align-items: center; opacity: 0; animation: fadeInMain 2s forwards 0.3s; padding: 40px 15px; }
+        #main-invitation { 
+            display: none; width: 100%; flex-direction: column; align-items: center; 
+            opacity: 0; animation: fadeInMain 2s forwards 0.3s; padding: 40px 15px; 
+            position: relative; z-index: 5; 
+        }
         body.content-active #main-invitation { display: flex; }
         @keyframes fadeInMain { to { opacity: 1; } }
 
@@ -156,91 +166,85 @@
         /* GLASSMORPHISM CARDS */
         .glass-card {
             width: 100%; max-width: 600px; padding: 60px 30px; margin-bottom: 50px;
-            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: var(--glass-bg); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-radius: 25px; border: 1px solid var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); text-align: center;
             display: flex; flex-direction: column; align-items: center;
+            transform: translateZ(0); /* Previene bugs de renderizado en iOS */
         }
 
         /* Tipografía */
-        .tag-line { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 6px; text-transform: uppercase; color: var(--floral-green); margin-bottom: 10px; font-weight: 600; }
+        .hero-tag { font-family: 'Cinzel', serif; font-size: 18px; letter-spacing: 10px; text-transform: uppercase; color: var(--floral-green); margin-bottom: 10px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,1); }
+        .title-script { font-family: 'Pinyon Script', cursive; font-size: 110px; color: var(--floral-pink); margin-bottom: 25px; line-height: 1.1; font-weight: 400; text-shadow: 0 0 25px rgba(255,255,255,1), 2px 2px 5px rgba(214, 50, 102, 0.3); }
+        .cursive-name { font-family: 'Pinyon Script', cursive; font-size: 45px; color: var(--floral-blue); font-weight: 400; margin: 10px 0; line-height: 1.2; text-shadow: 0 0 10px rgba(255,255,255,0.8);}
+        .body-serif { font-family: 'Cormorant Garamond', serif; font-size: 24px; line-height: 1.5; color: var(--text-dark); font-weight: 600; }
         
-        /* Modificación para más impacto en el Hero */
-        .title-script { 
-            font-family: 'Pinyon Script', cursive; 
-            font-size: 110px; 
-            color: var(--floral-pink); 
-            margin-bottom: 25px; 
-            line-height: 1.1; 
-            font-weight: 400; 
-            text-shadow: 0 0 20px rgba(255,255,255,0.9), 2px 2px 6px rgba(214, 50, 102, 0.4); 
-        }
-        
-        .cursive-name { font-family: 'Pinyon Script', cursive; font-size: 45px; color: var(--floral-blue); font-weight: 400; margin: 10px 0; line-height: 1.2;}
-        .body-serif { font-family: 'Cormorant Garamond', serif; font-size: 24px; line-height: 1.5; color: var(--text-dark); font-weight: 500; }
-        
-        .info-title { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 4px; text-transform: uppercase; color: var(--floral-orange); margin-bottom: 15px; font-weight: 600; }
-        .info-data { font-family: 'Cormorant Garamond', serif; font-size: 34px; color: var(--text-dark); margin-bottom: 5px; font-weight: 600; line-height: 1.3; }
+        .info-title { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 4px; text-transform: uppercase; color: var(--floral-orange); margin-bottom: 15px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        .info-data { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--text-dark); margin-bottom: 5px; font-weight: 700; line-height: 1.3; }
 
         /* Botones */
         .btn-solid {
             display: inline-block; background-color: var(--floral-blue); color: #fff;
-            padding: 18px 40px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px;
+            padding: 18px 40px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 3px;
             text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; border-radius: 30px;
             transition: all 0.4s ease; margin-top: 30px; position: relative; z-index: 5; box-shadow: 0 8px 20px rgba(108, 130, 198, 0.4);
         }
         .btn-solid:hover { background-color: var(--floral-pink); transform: translateY(-4px); box-shadow: 0 12px 25px rgba(214, 50, 102, 0.5); }
         
         .btn-accent { background-color: var(--floral-orange); box-shadow: 0 8px 20px rgba(243, 137, 45, 0.4); }
-        .btn-accent:hover { background-color: var(--floral-green); }
+        .btn-accent:hover { background-color: var(--floral-green); box-shadow: 0 8px 20px rgba(159, 168, 48, 0.4); }
 
         /* Countdown */
         .countdown-wrapper { display: flex; justify-content: center; gap: 15px; margin: 30px 0; width: 100%; }
-        .count-box { background: rgba(255,255,255,0.8); padding: 15px 10px; border-radius: 15px; min-width: 75px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--glass-border); }
-        .count-num { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--floral-pink); font-weight: 600; line-height: 1; }
-        .count-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--floral-green); font-weight: 600; margin-top: 5px; }
+        .count-box { background: rgba(255,255,255,0.9); padding: 15px 10px; border-radius: 15px; min-width: 75px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 1px solid var(--glass-border); }
+        .count-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; color: var(--floral-pink); font-weight: 700; line-height: 1; }
+        .count-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--floral-green); font-weight: 700; margin-top: 5px; }
 
         /* Itinerario */
         .timeline { width: 100%; text-align: left; margin-top: 20px; position: relative; }
-        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: rgba(108, 130, 198, 0.3); }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: rgba(108, 130, 198, 0.4); }
         .time-item { position: relative; padding-left: 45px; margin-bottom: 25px; }
-        .time-item::before { content: ''; position: absolute; left: 10px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--floral-pink); border: 3px solid #fff; box-shadow: 0 0 10px rgba(214, 50, 102, 0.4); }
-        .time-hour { font-family: 'Cinzel', serif; font-size: 16px; color: var(--floral-blue); font-weight: 600; }
-        .time-desc { font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-dark); margin-top: 5px; font-weight: 500; line-height: 1.4; }
+        .time-item::before { content: ''; position: absolute; left: 10px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: var(--floral-pink); border: 3px solid #fff; box-shadow: 0 0 10px rgba(214, 50, 102, 0.5); }
+        .time-hour { font-family: 'Cinzel', serif; font-size: 17px; color: var(--floral-blue); font-weight: 700; }
+        .time-desc { font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); margin-top: 5px; font-weight: 600; line-height: 1.4; }
 
         /* Mapas */
-        .map-box { width: 100%; height: 350px; margin: 30px auto; overflow: hidden; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 3px solid #fff; position: relative; z-index: 2; }
+        .map-box { width: 100%; height: 350px; margin: 30px auto; overflow: hidden; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 4px solid #fff; position: relative; z-index: 2; }
         .map-box iframe { width: 100%; height: 100%; border: none; }
 
         /* Formularios RSVP */
         .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; position: relative; z-index: 2; }
         .input-line {
-            width: 100%; padding: 18px 20px; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark);
-            font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; outline: none; border-radius: 12px;
-            text-align: center; transition: all 0.4s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+            width: 100%; padding: 18px 20px; background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 600; outline: none; border-radius: 12px;
+            text-align: center; transition: all 0.4s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
         }
-        .input-line:focus { border-color: var(--floral-pink); background: #fff; box-shadow: 0 5px 15px rgba(214, 50, 102, 0.1); }
+        .input-line:focus { border-color: var(--floral-pink); background: #fff; box-shadow: 0 5px 15px rgba(214, 50, 102, 0.15); }
         textarea.input-line { resize: vertical; min-height: 100px; }
         select.input-line { appearance: none; cursor: pointer; }
 
         /* Boleto VIP */
         .ticket-card {
-            width: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            width: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
             padding: 40px 20px; border-radius: 20px; border: 2px dashed var(--floral-orange);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.08); margin: 30px 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); margin: 30px 0;
         }
 
         @media (max-width: 480px) {
-            .env-title { font-size: 70px; }
-            .title-script { font-size: 90px; } /* Ajuste responsivo para el Hero */
+            .env-title { font-size: 90px; }
+            .title-script { font-size: 100px; }
             .glass-card { padding: 40px 20px; border-radius: 20px; }
-            .count-num { font-size: 28px; }
+            .count-num { font-size: 32px; }
             .count-box { min-width: 65px; padding: 10px; }
             .map-box { height: 280px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- CAPA DE FONDO FIJA -->
+    <div id="fixed-bg"></div>
 
     <!-- AUDIO -->
     <audio id="bg-music" src="assets/song.mp3" loop></audio>
@@ -273,9 +277,9 @@
         
         <!-- Portada -->
         <section class="glass-card anim-element anim-zoom">
-            <div class="tag-line delay-1">Mis XV Años</div>
+            <div class="hero-tag delay-1">Mis XV Años</div>
             <h1 class="title-script delay-2">Ximena</h1>
-            <p class="body-serif delay-4">
+            <p class="body-serif delay-4" style="margin-top: 10px;">
                 "Hay momentos inolvidables que se atesoran en el corazón para siempre, y el día de hoy quiero compartir la magia de este momento contigo."
             </p>
         </section>
@@ -299,12 +303,12 @@
         <section class="glass-card anim-element anim-zoom">
             <div class="info-title delay-1" style="margin-bottom: 25px;">Con la bendición de mis padres</div>
             <div class="cursive-name delay-2">Miriam Hernández</div>
-            <div style="font-family: 'Cinzel'; font-size: 20px; color: var(--floral-orange); margin: 5px 0;">&</div>
-            <div class="cursive-name delay-2" style="margin-bottom: 35px;">Uriel López</div>
+            <div style="font-family: 'Cinzel'; font-size: 24px; color: var(--floral-orange); margin: 5px 0;">&</div>
+            <div class="cursive-name delay-2" style="margin-bottom: 45px;">Uriel López</div>
             
             <div class="info-title delay-4" style="margin-bottom: 25px;">Y mis Padrinos</div>
             <div class="cursive-name delay-4">Octavio López</div>
-            <div style="font-family: 'Cinzel'; font-size: 20px; color: var(--floral-orange); margin: 5px 0;">&</div>
+            <div style="font-family: 'Cinzel'; font-size: 24px; color: var(--floral-orange); margin: 5px 0;">&</div>
             <div class="cursive-name delay-4">Mariana Monroy</div>
         </section>
 
@@ -340,7 +344,7 @@
         <!-- Dress Code -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">Dress Code</div>
-            <div class="info-data delay-2" style="font-family: 'Cinzel', serif; font-size: 38px; letter-spacing: 5px; color: var(--floral-pink); margin-bottom: 25px;">
+            <div class="info-data delay-2" style="font-family: 'Cinzel', serif; font-size: 38px; letter-spacing: 5px; color: var(--floral-pink); margin-top: 15px; margin-bottom: 25px;">
                 FORMAL
             </div>
             <p class="body-serif delay-4" style="color: var(--text-muted); font-size: 22px;">
@@ -358,14 +362,29 @@
             <p class="body-serif delay-4" style="margin-top: 15px; font-size: 22px;">
                 El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, puedes buscar nuestra mesa de regalos.
             </p>
-            <div class="delay-4" style="margin-top: 25px; font-size: 18px; font-weight: 600; color: var(--floral-blue);">
+            <div class="delay-4" style="margin-top: 25px; font-size: 18px; font-weight: 700; color: var(--floral-blue);">
                 Número de Evento: 52024161
             </div>
             <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/52024161" target="_blank" class="btn-solid btn-accent delay-4">Ver Mesa de Regalos</a>
         </section>
 
-        <!-- Galería -->
+        <!-- Spotify Playlist (SECCIÓN NUEVA) -->
         <section class="glass-card anim-element anim-fade-up">
+            <div class="info-title delay-1">Música</div>
+            <div class="info-data delay-2">Nuestra Playlist</div>
+            <p class="body-serif delay-3" style="margin: 15px auto 30px auto;">
+                Ayúdame a crear el ambiente perfecto agregando tus canciones favoritas para la pista de baile.
+            </p>
+            
+            <div class="delay-4" style="width: 100%; max-width: 480px; position: relative; z-index: 2;">
+                <iframe style="border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: none;" src="https://open.spotify.com/embed/playlist/4DUfu7jAXbzNlSj9MpPHIF?utm_source=generator" width="100%" height="352" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+            
+            <a href="https://open.spotify.com/playlist/4DUfu7jAXbzNlSj9MpPHIF?si=e439b78e14724579&pt=1ae24e5fde4f28334a35b816248ef3f4" target="_blank" class="btn-solid delay-4">Agregar Canciones</a>
+        </section>
+
+        <!-- Galería -->
+        <section class="glass-card anim-element anim-zoom">
             <div class="info-title delay-1">Momentos</div>
             <div class="info-data delay-2">Galería en Vivo</div>
             <p class="body-serif delay-3" style="margin: 20px auto;">
@@ -375,18 +394,18 @@
         </section>
 
         <!-- RSVP y Pases -->
-        <section class="glass-card anim-element anim-zoom" style="margin-bottom: 0;">
+        <section class="glass-card anim-element anim-fade-up" style="margin-bottom: 0;">
             
             <!-- Pases Dinámicos Invytia -->
             <div id="pases-section" style="display: none; width: 100%;">
                 <div class="info-title delay-1">Acceso al Evento</div>
                 <div class="ticket-card delay-2">
-                    <div class="tag-line" style="margin-bottom: 15px; color: var(--floral-pink);">Pase Exclusivo</div>
+                    <div class="hero-tag" style="margin-bottom: 15px; color: var(--floral-pink); font-size: 16px;">Pase Exclusivo</div>
                     <div class="body-serif" style="font-size: 22px; margin-bottom: 5px;">Pases Asignados</div>
-                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 70px; font-weight: 600; color: var(--floral-blue); line-height: 1;">
+                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 70px; font-weight: 700; color: var(--floral-blue); line-height: 1;">
                         0
                     </div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 20px;">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 20px;">
                         Muestra esta pantalla en recepción
                     </div>
                 </div>
@@ -416,7 +435,7 @@
                 </select>
             </div>
             
-            <button onclick="sendRSVP()" class="btn-solid btn-accent delay-4" style="margin-bottom: 70px; width: 100%; max-width: 300px;">Enviar Confirmación</button>
+            <button onclick="sendRSVP()" class="btn-solid btn-accent delay-4" style="margin-bottom: 60px; width: 100%; max-width: 300px;">Enviar Confirmación</button>
 
             <div class="info-title delay-1">Mensajes</div>
             <div class="info-data delay-2">Muro de los Deseos</div>
@@ -465,16 +484,17 @@
             const screen = document.getElementById('envelope-screen');
             wrapper.classList.add('open');
             
+            // Forzar el intento de reproducción de audio apenas el usuario hace clic
+            bgMusic.play().then(() => {
+                isMusicPlaying = true; playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
+            }).catch(e => {
+                console.log("El navegador bloqueó la reproducción automática.");
+                isMusicPlaying = false; playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
+            });
+
             setTimeout(() => {
                 screen.classList.add('fade-out');
                 document.body.classList.add('content-active');
-                
-                bgMusic.play().then(() => {
-                    isMusicPlaying = true; playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
-                }).catch(e => {
-                    console.log("Autoplay bloqueado.");
-                    isMusicPlaying = false; playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
-                });
             }, 1000);
         }
 
