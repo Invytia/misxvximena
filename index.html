@@ -15,7 +15,7 @@
             
             --text-dark: #2A2A2A;      
             --text-muted: #4A4A4A;
-            --glass-bg: rgba(255, 255, 255, 0.85); /* Opacidad ajustada para perfecta legibilidad */
+            --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: rgba(255, 255, 255, 0.6);
             --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -32,7 +32,7 @@
             background-color: transparent;
         }
 
-        /* FONDO FIJO SEGURO (Mantiene proporción y no desaparece) */
+        /* FONDO FIJO SEGURO */
         #fixed-bg {
             position: fixed;
             top: 0;
@@ -171,7 +171,7 @@
             border-radius: 25px; border: 1px solid var(--glass-border);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); text-align: center;
             display: flex; flex-direction: column; align-items: center;
-            transform: translateZ(0); /* Previene bugs de renderizado en iOS */
+            transform: translateZ(0);
         }
 
         /* Tipografía */
@@ -196,10 +196,38 @@
         .btn-accent:hover { background-color: var(--floral-green); box-shadow: 0 8px 20px rgba(159, 168, 48, 0.4); }
 
         /* Countdown */
-        .countdown-wrapper { display: flex; justify-content: center; gap: 15px; margin: 30px 0; width: 100%; }
+        .countdown-wrapper { display: flex; justify-content: center; gap: 15px; margin: 25px 0; width: 100%; }
         .count-box { background: rgba(255,255,255,0.9); padding: 15px 10px; border-radius: 15px; min-width: 75px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 1px solid var(--glass-border); }
         .count-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; color: var(--floral-pink); font-weight: 700; line-height: 1; }
         .count-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--floral-green); font-weight: 700; margin-top: 5px; }
+
+        /* Calendario Widget */
+        .calendar-wrapper {
+            width: 100%; max-width: 350px; margin: 30px auto 10px auto; padding: 35px 25px;
+            background: rgba(255,255,255,0.9); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-sizing: border-box; border: 1px solid var(--glass-border); position: relative; z-index: 2;
+        }
+        .calendar-month {
+            font-family: 'Cinzel', serif; font-size: 22px; color: var(--floral-blue);
+            text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; font-weight: 700;
+        }
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+            width: 100%; box-sizing: border-box;
+        }
+        .cal-header {
+            font-family: 'Montserrat', sans-serif; font-size: 12px;
+            font-weight: 700; color: var(--floral-orange); padding-bottom: 10px;
+        }
+        .cal-day {
+            font-family: 'Cormorant Garamond', serif; font-size: 20px;
+            font-weight: 600; color: var(--text-dark); display: flex; justify-content: center; align-items: center;
+            aspect-ratio: 1; border-radius: 50%;
+        }
+        .cal-day.active {
+            background-color: var(--floral-pink); color: #fff; 
+            font-weight: 700; box-shadow: 0 4px 12px rgba(214, 50, 102, 0.4);
+        }
 
         /* Itinerario */
         .timeline { width: 100%; text-align: left; margin-top: 20px; position: relative; }
@@ -238,6 +266,7 @@
             .count-num { font-size: 32px; }
             .count-box { min-width: 65px; padding: 10px; }
             .map-box { height: 280px; }
+            .calendar-wrapper { padding: 25px 15px; }
         }
     </style>
 </head>
@@ -284,7 +313,7 @@
             </p>
         </section>
 
-        <!-- Fecha y Cuenta Regresiva -->
+        <!-- Fecha, Cuenta Regresiva y Calendario -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">El gran día</div>
             <div class="info-data delay-2" style="font-size: 42px;">14 de Noviembre</div>
@@ -296,6 +325,20 @@
                 <div class="count-box"><div class="count-num" id="cd-mins">00</div><div class="count-label">Min</div></div>
                 <div class="count-box"><div class="count-num" id="cd-secs">00</div><div class="count-label">Seg</div></div>
             </div>
+
+            <!-- Widget de Calendario -->
+            <div class="anim-element anim-zoom delay-4 calendar-wrapper">
+                <div class="calendar-month">Noviembre</div>
+                <div class="calendar-grid">
+                    <div class="cal-header">D</div><div class="cal-header">L</div><div class="cal-header">M</div><div class="cal-header">M</div><div class="cal-header">J</div><div class="cal-header">V</div><div class="cal-header">S</div>
+                    <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+                    <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day active">14</div>
+                    <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
+                    <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
+                    <div class="cal-day">29</div><div class="cal-day">30</div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+            </div>
+
             <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Ximena&dates=20261114T200000Z/20261115T020000Z&details=Celebremos+juntos+los+XV+A%C3%B1os+de+Ximena+en+Hacienda+La+Esmeralda." target="_blank" class="btn-solid delay-4">Agendar Evento</a>
         </section>
 
