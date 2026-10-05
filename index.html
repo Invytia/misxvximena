@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis XV Años - Ximena</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Paleta Floral basada en la imagen proporcionada */
             --floral-pink: #d63266;
             --floral-green: #9fa830;
             --floral-blue: #6c82c6;
@@ -14,14 +15,13 @@
             
             --text-dark: #2A2A2A;      
             --text-muted: #4A4A4A;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
             --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* FONDO TOTALMENTE TRANSPARENTE PARA NO CUBRIR LA IMAGEN FIJA */
         body, html {
             width: 100%;
             height: 100%;
@@ -29,11 +29,12 @@
             color: var(--text-dark);
             overflow-x: hidden;
             scroll-behavior: smooth;
-            background-color: transparent !important;
+            background-color: transparent;
         }
 
-        /* CAPA DE FONDO FIJA Y PROPORCIONAL */
-        #bg-fixed {
+        /* FONDO FIJO AL TAMAÑO DE LA PANTALLA (NO EXTENDIDO) */
+        body::before {
+            content: "";
             position: fixed;
             top: 0;
             left: 0;
@@ -41,9 +42,10 @@
             height: 100vh;
             background-image: url('assets/fondo.jpg');
             background-size: cover;
-            background-position: center center;
+            background-position: center;
             background-repeat: no-repeat;
             z-index: -10;
+            pointer-events: none;
         }
 
         /* Destellos Animados */
@@ -51,14 +53,14 @@
             position: fixed;
             border-radius: 50%;
             background: #fff;
-            box-shadow: 0 0 12px 3px rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
             animation: twinkle 3s infinite ease-in-out;
             pointer-events: none;
             z-index: 500;
         }
         @keyframes twinkle {
             0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.3); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         /* --- REPRODUCTOR DE MÚSICA (STICKY) --- */
@@ -68,13 +70,13 @@
             justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(214, 50, 102, 0.5);
             z-index: 2000; cursor: pointer; opacity: 0; visibility: hidden;
             transform: translateY(20px) scale(0.9); transition: all 0.6s var(--transition-smooth);
-            border: 2px solid rgba(255,255,255,0.7); outline: none; backdrop-filter: blur(5px);
+            border: 2px solid rgba(255,255,255,0.5); outline: none; backdrop-filter: blur(5px);
         }
         body.content-active .sticky-music-btn { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
         .sticky-music-btn:hover { transform: scale(1.1); background-color: var(--floral-orange); }
         .sticky-music-btn svg { width: 22px; height: 22px; fill: #fff; }
 
-        /* --- SOBRE INICIAL --- */
+        /* --- SOBRE (SIN CAPA OSCURA) --- */
         #envelope-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -83,38 +85,24 @@
         }
         #envelope-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        /* Contenedor del texto sin caja, con halo de luz difuminado para contraste */
         .envelope-text-container {
-            text-align: center; 
-            margin-bottom: 40px; 
-            animation: floatText 4s ease-in-out infinite;
-            position: relative; 
-            z-index: 10;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 45%, transparent 70%);
-            padding: 50px 30px;
-            border-radius: 50%;
+            text-align: center; margin-bottom: 50px; animation: floatText 4s ease-in-out infinite;
+            position: relative; z-index: 10;
+            background: var(--glass-bg); padding: 20px 40px; border-radius: 20px;
+            backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .env-tag { 
-            font-family: 'Cinzel', serif; font-size: 18px; letter-spacing: 12px; 
-            text-transform: uppercase; color: var(--floral-blue); font-weight: 700;
-            -webkit-text-stroke: 0.5px #ffffff;
-            text-shadow: 0px 4px 15px rgba(255,255,255,1);
-        }
-        
-        .env-title { 
-            font-family: 'Pinyon Script', cursive; font-size: 110px; color: var(--floral-pink); 
-            line-height: 1.1; margin-top: 5px; 
-            -webkit-text-stroke: 1px #ffffff;
-            text-shadow: 0px 5px 20px rgba(255,255,255,1), 2px 2px 5px rgba(0,0,0,0.15); 
-        }
+        .env-tag { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 8px; text-transform: uppercase; color: var(--floral-blue); font-weight: 600; }
+        .env-title { font-family: 'Pinyon Script', cursive; font-size: 85px; color: var(--floral-pink); line-height: 1.2; margin-top: 5px; text-shadow: 2px 2px 4px rgba(255,255,255,0.5); }
 
-        .envelope-wrapper { position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth); z-index: 10; margin-bottom: 20px; }
+        .envelope-wrapper { position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth); z-index: 10; }
         .envelope-wrapper:hover { transform: translateY(-8px); }
 
+        /* Diseño de sobre translúcido/glass */
         .envelope {
             position: relative; width: 320px; height: 210px; border-radius: 10px;
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 1px solid var(--glass-border);
         }
         .envelope::before {
@@ -124,12 +112,12 @@
         }
         .envelope::after {
             content: ''; position: absolute; top: 0; left: 0;
-            border-left: 160px solid rgba(255, 255, 255, 0.7); border-top: 105px solid transparent;
-            border-bottom: 105px solid rgba(255, 255, 255, 0.7); z-index: 2; border-radius: 10px 0 0 10px;
+            border-left: 160px solid rgba(255, 255, 255, 0.6); border-top: 105px solid transparent;
+            border-bottom: 105px solid rgba(255, 255, 255, 0.6); z-index: 2; border-radius: 10px 0 0 10px;
         }
         .front-flap {
             position: absolute; top: 0; left: 0; border-left: 160px solid transparent; border-right: 160px solid transparent;
-            border-top: 115px solid rgba(255, 255, 255, 0.8); transform-origin: top; transition: transform 0.9s var(--transition-smooth); z-index: 4;
+            border-top: 115px solid rgba(255, 255, 255, 0.7); transform-origin: top; transition: transform 0.9s var(--transition-smooth); z-index: 4;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
         .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
@@ -138,21 +126,18 @@
             position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
             width: 50px; height: 50px; background-color: var(--floral-pink);
             border-radius: 50%; z-index: 5; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 15px rgba(214, 50, 102, 0.5); border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(214, 50, 102, 0.4); border: 2px solid #fff;
             transition: opacity 0.5s ease 0.1s, transform 0.5s ease;
         }
         .wax-seal svg { width: 25px; height: 25px; fill: #fff; }
         .envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0.5); pointer-events: none; }
 
         .hint-text {
-            text-align: center; font-size: 13px; font-weight: 700; text-transform: uppercase; 
-            letter-spacing: 4px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            margin-top: 10px; animation: pulse 2.5s infinite; 
-            background: rgba(184, 137, 103, 0.95); /* Color arena/oro estilo píldora */
-            padding: 12px 28px; border-radius: 30px; backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            text-align: center; font-size: 13px; font-weight: 600; text-transform: uppercase; 
+            letter-spacing: 4px; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            margin-top: 40px; animation: pulse 2.5s infinite; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; backdrop-filter: blur(5px);
         }
-        @keyframes pulse { 0% { opacity: 0.8; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0.8; transform: scale(1); } }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
         @keyframes floatText { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
 
         /* --- CONTENIDO PRINCIPAL --- */
@@ -171,84 +156,91 @@
         /* GLASSMORPHISM CARDS */
         .glass-card {
             width: 100%; max-width: 600px; padding: 60px 30px; margin-bottom: 50px;
-            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-radius: 25px; border: 1px solid var(--glass-border);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); text-align: center;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Tipografía y Hero Impact */
-        .hero-tag { font-family: 'Cinzel', serif; font-size: 20px; letter-spacing: 10px; text-transform: uppercase; color: var(--floral-green); margin-bottom: 10px; font-weight: 700; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
-        .hero-title { font-family: 'Pinyon Script', cursive; font-size: 130px; color: var(--floral-pink); margin-bottom: 30px; line-height: 1; font-weight: 400; text-shadow: 0 0 25px rgba(255,255,255,1), 2px 2px 5px rgba(214, 50, 102, 0.3); }
+        /* Tipografía */
+        .tag-line { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 6px; text-transform: uppercase; color: var(--floral-green); margin-bottom: 10px; font-weight: 600; }
         
-        .cursive-name { font-family: 'Pinyon Script', cursive; font-size: 48px; color: var(--floral-blue); font-weight: 400; margin: 5px 0; line-height: 1.2; text-shadow: 0 0 10px rgba(255,255,255,0.8);}
-        .body-serif { font-family: 'Cormorant Garamond', serif; font-size: 26px; line-height: 1.4; color: var(--text-dark); font-weight: 600; }
+        /* Modificación para más impacto en el Hero */
+        .title-script { 
+            font-family: 'Pinyon Script', cursive; 
+            font-size: 110px; 
+            color: var(--floral-pink); 
+            margin-bottom: 25px; 
+            line-height: 1.1; 
+            font-weight: 400; 
+            text-shadow: 0 0 20px rgba(255,255,255,0.9), 2px 2px 6px rgba(214, 50, 102, 0.4); 
+        }
         
-        .info-title { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 5px; text-transform: uppercase; color: var(--floral-orange); margin-bottom: 10px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.8);}
-        .info-data { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--text-dark); margin-bottom: 20px; font-weight: 700; line-height: 1.2; }
+        .cursive-name { font-family: 'Pinyon Script', cursive; font-size: 45px; color: var(--floral-blue); font-weight: 400; margin: 10px 0; line-height: 1.2;}
+        .body-serif { font-family: 'Cormorant Garamond', serif; font-size: 24px; line-height: 1.5; color: var(--text-dark); font-weight: 500; }
+        
+        .info-title { font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 4px; text-transform: uppercase; color: var(--floral-orange); margin-bottom: 15px; font-weight: 600; }
+        .info-data { font-family: 'Cormorant Garamond', serif; font-size: 34px; color: var(--text-dark); margin-bottom: 5px; font-weight: 600; line-height: 1.3; }
 
         /* Botones */
         .btn-solid {
             display: inline-block; background-color: var(--floral-blue); color: #fff;
-            padding: 18px 40px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 3px;
+            padding: 18px 40px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px;
             text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; border-radius: 30px;
-            transition: all 0.4s ease; margin-top: 20px; position: relative; z-index: 5; box-shadow: 0 8px 20px rgba(108, 130, 198, 0.4);
+            transition: all 0.4s ease; margin-top: 30px; position: relative; z-index: 5; box-shadow: 0 8px 20px rgba(108, 130, 198, 0.4);
         }
         .btn-solid:hover { background-color: var(--floral-pink); transform: translateY(-4px); box-shadow: 0 12px 25px rgba(214, 50, 102, 0.5); }
         
         .btn-accent { background-color: var(--floral-orange); box-shadow: 0 8px 20px rgba(243, 137, 45, 0.4); }
-        .btn-accent:hover { background-color: var(--floral-green); box-shadow: 0 8px 20px rgba(159, 168, 48, 0.4); }
+        .btn-accent:hover { background-color: var(--floral-green); }
 
         /* Countdown */
-        .countdown-wrapper { display: flex; justify-content: center; gap: 15px; margin: 20px 0 35px 0; width: 100%; }
-        .count-box { background: rgba(255,255,255,0.9); padding: 15px 10px; border-radius: 15px; min-width: 75px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 1px solid var(--glass-border); }
-        .count-num { font-family: 'Cormorant Garamond', serif; font-size: 42px; color: var(--floral-pink); font-weight: 700; line-height: 1; }
-        .count-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--floral-green); font-weight: 700; margin-top: 5px; }
+        .countdown-wrapper { display: flex; justify-content: center; gap: 15px; margin: 30px 0; width: 100%; }
+        .count-box { background: rgba(255,255,255,0.8); padding: 15px 10px; border-radius: 15px; min-width: 75px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--glass-border); }
+        .count-num { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--floral-pink); font-weight: 600; line-height: 1; }
+        .count-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--floral-green); font-weight: 600; margin-top: 5px; }
 
         /* Itinerario */
-        .timeline { width: 100%; text-align: left; margin-top: 15px; position: relative; }
-        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: rgba(108, 130, 198, 0.4); }
+        .timeline { width: 100%; text-align: left; margin-top: 20px; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: rgba(108, 130, 198, 0.3); }
         .time-item { position: relative; padding-left: 45px; margin-bottom: 25px; }
-        .time-item::before { content: ''; position: absolute; left: 10px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: var(--floral-pink); border: 3px solid #fff; box-shadow: 0 0 10px rgba(214, 50, 102, 0.5); }
-        .time-hour { font-family: 'Cinzel', serif; font-size: 17px; color: var(--floral-blue); font-weight: 700; }
-        .time-desc { font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); margin-top: 5px; font-weight: 600; line-height: 1.4; }
+        .time-item::before { content: ''; position: absolute; left: 10px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--floral-pink); border: 3px solid #fff; box-shadow: 0 0 10px rgba(214, 50, 102, 0.4); }
+        .time-hour { font-family: 'Cinzel', serif; font-size: 16px; color: var(--floral-blue); font-weight: 600; }
+        .time-desc { font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-dark); margin-top: 5px; font-weight: 500; line-height: 1.4; }
 
         /* Mapas */
-        .map-box { width: 100%; height: 350px; margin: 20px auto 30px auto; overflow: hidden; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: 4px solid #fff; position: relative; z-index: 2; }
+        .map-box { width: 100%; height: 350px; margin: 30px auto; overflow: hidden; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 3px solid #fff; position: relative; z-index: 2; }
         .map-box iframe { width: 100%; height: 100%; border: none; }
 
         /* Formularios RSVP */
         .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; position: relative; z-index: 2; }
         .input-line {
-            width: 100%; padding: 18px 20px; background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark);
-            font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 600; outline: none; border-radius: 12px;
-            text-align: center; transition: all 0.4s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+            width: 100%; padding: 18px 20px; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 500; outline: none; border-radius: 12px;
+            text-align: center; transition: all 0.4s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
         }
-        .input-line:focus { border-color: var(--floral-pink); background: #fff; box-shadow: 0 5px 15px rgba(214, 50, 102, 0.15); }
+        .input-line:focus { border-color: var(--floral-pink); background: #fff; box-shadow: 0 5px 15px rgba(214, 50, 102, 0.1); }
         textarea.input-line { resize: vertical; min-height: 100px; }
         select.input-line { appearance: none; cursor: pointer; }
 
         /* Boleto VIP */
         .ticket-card {
-            width: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
+            width: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
             padding: 40px 20px; border-radius: 20px; border: 2px dashed var(--floral-orange);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1); margin: 15px 0 40px 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08); margin: 30px 0;
         }
 
         @media (max-width: 480px) {
-            .env-title { font-size: 90px; }
-            .hero-title { font-size: 105px; }
-            .glass-card { padding: 45px 20px; border-radius: 20px; }
-            .count-num { font-size: 34px; }
+            .env-title { font-size: 70px; }
+            .title-script { font-size: 90px; } /* Ajuste responsivo para el Hero */
+            .glass-card { padding: 40px 20px; border-radius: 20px; }
+            .count-num { font-size: 28px; }
             .count-box { min-width: 65px; padding: 10px; }
             .map-box { height: 280px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- FONDO FIJO CORREGIDO -->
-    <div id="bg-fixed"></div>
 
     <!-- AUDIO -->
     <audio id="bg-music" src="assets/song.mp3" loop></audio>
@@ -259,7 +251,7 @@
         <svg id="music-icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
     </button>
 
-    <!-- SOBRE INICIAL -->
+    <!-- SOBRE -->
     <div id="envelope-screen">
         <div class="envelope-text-container">
             <div class="env-tag">Mis XV Años</div>
@@ -279,11 +271,11 @@
     <!-- MAIN INVITATION -->
     <main id="main-invitation">
         
-        <!-- Portada / Hero -->
+        <!-- Portada -->
         <section class="glass-card anim-element anim-zoom">
-            <div class="hero-tag delay-1">Mis XV Años</div>
-            <h1 class="hero-title delay-2">Ximena</h1>
-            <p class="body-serif delay-3">
+            <div class="tag-line delay-1">Mis XV Años</div>
+            <h1 class="title-script delay-2">Ximena</h1>
+            <p class="body-serif delay-4">
                 "Hay momentos inolvidables que se atesoran en el corazón para siempre, y el día de hoy quiero compartir la magia de este momento contigo."
             </p>
         </section>
@@ -292,7 +284,7 @@
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">El gran día</div>
             <div class="info-data delay-2" style="font-size: 42px;">14 de Noviembre</div>
-            <div class="info-data delay-2" style="color: var(--floral-pink); font-size: 32px; margin-bottom: 10px;">2026 • 14:00 Hrs</div>
+            <div class="info-data delay-2" style="color: var(--floral-pink); font-size: 30px;">2026 • 14:00 Hrs</div>
 
             <div class="countdown-wrapper delay-3">
                 <div class="count-box"><div class="count-num" id="cd-days">00</div><div class="count-label">Días</div></div>
@@ -307,19 +299,19 @@
         <section class="glass-card anim-element anim-zoom">
             <div class="info-title delay-1" style="margin-bottom: 25px;">Con la bendición de mis padres</div>
             <div class="cursive-name delay-2">Miriam Hernández</div>
-            <div style="font-family: 'Cinzel'; font-size: 24px; color: var(--floral-orange); margin: 5px 0;">&</div>
+            <div style="font-family: 'Cinzel'; font-size: 20px; color: var(--floral-orange); margin: 5px 0;">&</div>
             <div class="cursive-name delay-2" style="margin-bottom: 35px;">Uriel López</div>
             
-            <div class="info-title delay-3" style="margin-bottom: 25px;">Y mis Padrinos</div>
+            <div class="info-title delay-4" style="margin-bottom: 25px;">Y mis Padrinos</div>
             <div class="cursive-name delay-4">Octavio López</div>
-            <div style="font-family: 'Cinzel'; font-size: 24px; color: var(--floral-orange); margin: 5px 0;">&</div>
+            <div style="font-family: 'Cinzel'; font-size: 20px; color: var(--floral-orange); margin: 5px 0;">&</div>
             <div class="cursive-name delay-4">Mariana Monroy</div>
         </section>
 
         <!-- Ubicación -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">Recepción</div>
-            <div class="info-data delay-2" style="font-size: 40px; margin-bottom: 5px;">Hacienda La Esmeralda</div>
+            <div class="info-data delay-2" style="font-size: 38px;">Hacienda La Esmeralda</div>
             
             <div class="map-box delay-3">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4094.765524520909!2d-99.1419112!3d19.273514600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce011e9d0ed57d%3A0x6cde37db15c530fa!2sHacienda%20La%20Esmeralda%20-%20Eventos%20en%20CDMX!5e1!3m2!1ses-419!2smx!4v1791238606841!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -348,10 +340,10 @@
         <!-- Dress Code -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">Dress Code</div>
-            <div class="info-data delay-2" style="font-family: 'Cinzel', serif; font-size: 45px; letter-spacing: 5px; color: var(--floral-pink); margin-top: 15px; margin-bottom: 25px;">
+            <div class="info-data delay-2" style="font-family: 'Cinzel', serif; font-size: 38px; letter-spacing: 5px; color: var(--floral-pink); margin-bottom: 25px;">
                 FORMAL
             </div>
-            <p class="body-serif delay-3" style="color: var(--text-dark); font-size: 24px;">
+            <p class="body-serif delay-4" style="color: var(--text-muted); font-size: 22px;">
                 Para mantener la elegancia de la noche, se solicita amablemente <strong>reservar el color rosa exclusivamente para la quinceañera.</strong>
             </p>
         </section>
@@ -359,14 +351,14 @@
         <!-- Mesa de Regalos -->
         <section class="glass-card anim-element anim-zoom">
             <div class="info-title delay-1">Mesa de Regalos</div>
-            <svg class="delay-2" viewBox="0 0 24 24" style="width: 55px; height: 55px; fill: var(--floral-pink); margin: 15px 0;">
+            <svg class="delay-2" viewBox="0 0 24 24" style="width: 50px; height: 50px; fill: var(--floral-pink); margin: 15px 0;">
                 <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
             <div class="info-data delay-3">Liverpool</div>
-            <p class="body-serif delay-4" style="margin-top: 15px; font-size: 24px;">
+            <p class="body-serif delay-4" style="margin-top: 15px; font-size: 22px;">
                 El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, puedes buscar nuestra mesa de regalos.
             </p>
-            <div class="delay-4" style="margin-top: 25px; font-size: 20px; font-weight: 700; color: var(--floral-blue);">
+            <div class="delay-4" style="margin-top: 25px; font-size: 18px; font-weight: 600; color: var(--floral-blue);">
                 Número de Evento: 52024161
             </div>
             <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/52024161" target="_blank" class="btn-solid btn-accent delay-4">Ver Mesa de Regalos</a>
@@ -389,20 +381,20 @@
             <div id="pases-section" style="display: none; width: 100%;">
                 <div class="info-title delay-1">Acceso al Evento</div>
                 <div class="ticket-card delay-2">
-                    <div class="hero-tag" style="margin-bottom: 20px; color: var(--floral-pink); font-size: 16px;">Pase Exclusivo</div>
-                    <div class="body-serif" style="font-size: 24px; margin-bottom: 10px;">Pases Asignados</div>
-                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 80px; font-weight: 700; color: var(--floral-blue); line-height: 1;">
+                    <div class="tag-line" style="margin-bottom: 15px; color: var(--floral-pink);">Pase Exclusivo</div>
+                    <div class="body-serif" style="font-size: 22px; margin-bottom: 5px;">Pases Asignados</div>
+                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 70px; font-weight: 600; color: var(--floral-blue); line-height: 1;">
                         0
                     </div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 25px;">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 20px;">
                         Muestra esta pantalla en recepción
                     </div>
                 </div>
             </div>
 
-            <div class="info-title delay-1" style="margin-top: 20px;">RSVP</div>
+            <div class="info-title delay-1" style="margin-top: 30px;">RSVP</div>
             <div class="info-data delay-2">Confirmar Asistencia</div>
-            <p class="body-serif delay-3" style="margin: 15px auto 35px auto;">
+            <p class="body-serif delay-3" style="margin: 15px auto 30px auto;">
                 Agradecemos tu confirmación antes del<br><strong style="color: var(--floral-pink);">31 de Octubre</strong>
             </p>
 
@@ -424,11 +416,11 @@
                 </select>
             </div>
             
-            <button onclick="sendRSVP()" class="btn-solid btn-accent delay-4" style="margin-bottom: 60px; width: 100%; max-width: 320px;">Enviar Confirmación</button>
+            <button onclick="sendRSVP()" class="btn-solid btn-accent delay-4" style="margin-bottom: 70px; width: 100%; max-width: 300px;">Enviar Confirmación</button>
 
             <div class="info-title delay-1">Mensajes</div>
             <div class="info-data delay-2">Muro de los Deseos</div>
-            <div class="form-group delay-3" style="margin-top: 35px;">
+            <div class="form-group delay-3" style="margin-top: 30px;">
                 <textarea id="wish-message" class="input-line" placeholder="Deja un lindo mensaje para Ximena..."></textarea>
             </div>
             <button onclick="sendWish()" class="btn-solid delay-4">Enviar Mensaje</button>
@@ -439,7 +431,7 @@
     <script>
         // --- CREADOR DE DESTELLOS ---
         function createSparkles() {
-            for(let i=0; i<18; i++) {
+            for(let i=0; i<15; i++) {
                 let sparkle = document.createElement('div');
                 sparkle.classList.add('sparkle');
                 sparkle.style.width = Math.random() * 6 + 2 + 'px';
@@ -473,21 +465,16 @@
             const screen = document.getElementById('envelope-screen');
             wrapper.classList.add('open');
             
-            // Forzar reproducción de audio al abrir el sobre
-            bgMusic.play().then(() => {
-                isMusicPlaying = true; 
-                playIcon.style.display = 'none'; 
-                pauseIcon.style.display = 'block';
-            }).catch(e => {
-                console.log("Autoplay bloqueado por el navegador.");
-                isMusicPlaying = false; 
-                playIcon.style.display = 'block'; 
-                pauseIcon.style.display = 'none';
-            });
-
             setTimeout(() => {
                 screen.classList.add('fade-out');
                 document.body.classList.add('content-active');
+                
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true; playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
+                }).catch(e => {
+                    console.log("Autoplay bloqueado.");
+                    isMusicPlaying = false; playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
+                });
             }, 1000);
         }
 
@@ -572,7 +559,7 @@
             }
             
             guests = guests || "1"; 
-            let message = status === "yes" 
+            let message = status === "yes"  
                 ? `¡Hola! Soy ${name}. Sí, confirmo con gusto mi asistencia a los XV años de Ximena. Seremos ${guests} persona(s) en total.`
                 : `¡Hola! Soy ${name}. Lamentablemente no me será posible asistir a los XV años de Ximena. Agradezco mucho la invitación.`;
             
