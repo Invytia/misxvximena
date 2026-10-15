@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis XV Años - Ximena</title>
-    <!-- Tipografía Serif elegante basada en la imagen -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <!-- Tipografías -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             /* Paleta Neutra y Rosa */
@@ -71,61 +71,80 @@
         .sticky-music-btn:hover { transform: scale(1.1); }
         .sticky-music-btn svg { width: 22px; height: 22px; fill: #fff; }
 
-        /* --- SOBRE INICIAL (Estilo Imagen) --- */
+        /* --- SOBRE INICIAL --- */
         #envelope-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100dvh; /* evita problemas con la barra del navegador en celular */
+            z-index: 1000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             transition: opacity 1.2s ease-in-out, visibility 1.2s;
-            background-color: #FFFFFF; /* Fondo blanco para que la imagen se integre sin cortes */
-            background-image: url('assets/marco-floral.png'); 
-            /* contain asegura que la imagen se adapte a la pantalla respetando sus proporciones sin deformarse */
-            background-size: contain; 
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: #fdfdfd;
+            overflow: hidden;
         }
         #envelope-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 
+        /* Imagen floral de fondo (etiqueta <img>, cubre toda la pantalla) */
+        .env-bg {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
         .envelope-text-container {
-            text-align: center; margin-bottom: 50px; 
+            text-align: center; margin-bottom: 28px;
             position: relative; z-index: 10;
         }
-
-        .env-title { 
-            font-size: 55px; 
-            line-height: 1.1; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 12px;
-            margin-bottom: 20px;
+        .env-title {
+            font-family: 'Cinzel', serif;
+            font-size: 46px; font-weight: 400;
+            text-transform: uppercase; letter-spacing: 16px;
+            margin-right: -16px; /* compensa el espacio final para centrar bien */
+            margin-bottom: 22px; line-height: 1.1;
         }
-
         .hint-text {
-            text-align: center; font-size: 14px; font-weight: 600; text-transform: uppercase; 
-            letter-spacing: 6px; animation: pulse 2.5s infinite; 
+            font-family: 'Cinzel', serif;
+            font-size: 13px; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 11px; margin-right: -11px;
+            animation: pulse 2.5s infinite;
         }
 
-        .envelope-wrapper { position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth); z-index: 10; margin-bottom: 20px; }
-        .envelope-wrapper:hover { transform: translateY(-8px); }
+        .envelope-wrapper {
+            position: relative; cursor: pointer; z-index: 10;
+            width: 250px; height: 170px;
+            transition: transform 0.6s var(--transition-smooth);
+        }
+        .envelope-wrapper:hover { transform: translateY(-6px); }
 
-        /* Sobre Blanco Minimalista */
+        /* Sobre acuarela cerrado */
         .envelope {
-            position: relative; width: 320px; height: 210px; border-radius: 6px;
-            background: #fdfdfd; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            border: 1px solid #eaeaea;
+            position: relative; width: 100%; height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(160deg, #ffffff 0%, #eceff1 100%);
+            box-shadow: 0 6px 14px rgba(120, 130, 140, 0.25);
+            overflow: hidden;
         }
-        .envelope::before {
-            content: ''; position: absolute; top: 0; right: 0;
-            border-right: 160px solid #f2f2f2; border-top: 105px solid transparent;
-            border-bottom: 105px solid #f2f2f2; z-index: 2; border-radius: 0 6px 6px 0;
+        .envelope::before { /* pliegues laterales e inferior */
+            content: ''; position: absolute; inset: 0;
+            background: #f3f4f6;
+            clip-path: polygon(0 0, 50% 58%, 0 100%, 100% 100%, 50% 58%, 100% 0, 100% 100%, 0 100%);
+            opacity: 0.9;
         }
-        .envelope::after {
-            content: ''; position: absolute; top: 0; left: 0;
-            border-left: 160px solid #f9f9f9; border-top: 105px solid transparent;
-            border-bottom: 105px solid #f9f9f9; z-index: 2; border-radius: 6px 0 0 6px;
+        .envelope::after { /* sombra suave del pliegue inferior */
+            content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
+            background: linear-gradient(to top, rgba(160,170,180,0.25), transparent);
         }
         .front-flap {
-            position: absolute; top: 0; left: 0; border-left: 160px solid transparent; border-right: 160px solid transparent;
-            border-top: 115px solid #ffffff; transform-origin: top; transition: transform 0.9s var(--transition-smooth); z-index: 4;
-            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.08));
+            position: absolute; top: 0; left: 0; width: 100%; height: 62%;
+            background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform 0.9s var(--transition-smooth);
+            z-index: 4;
+            filter: drop-shadow(0 3px 3px rgba(0,0,0,0.12));
         }
         .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
 
@@ -257,7 +276,8 @@
         }
 
         @media (max-width: 480px) {
-            .env-title { font-size: 42px; letter-spacing: 8px; }
+            .env-title { font-size: 36px; letter-spacing: 12px; margin-right: -12px; }
+            .hint-text { font-size: 11px; letter-spacing: 8px; margin-right: -8px; }
             .title-script { font-size: 40px; }
             .glass-card { padding: 40px 20px; border-radius: 16px; }
             .count-num { font-size: 26px; }
@@ -283,6 +303,9 @@
 
     <!-- SOBRE ESTILO FLORAL -->
     <div id="envelope-screen">
+        <!-- Imagen de fondo floral: assets/fondo.jpg -->
+        <img class="env-bg" src="assets/fondo.jpg?v=2" alt="" onerror="console.error('No se pudo cargar assets/fondo.jpg. Revisa que el archivo exista en la carpeta assets y que el nombre esté en minúsculas.')">
+
         <div class="envelope-text-container">
             <h1 class="env-title">Ximena</h1>
             <div class="hint-text">Toca para abrir</div>
