@@ -77,9 +77,9 @@
             z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1.2s ease-in-out, visibility 1.2s;
             background-color: #FFFFFF; /* Fondo blanco */
-            /* Agrega aquí tu imagen del marco floral */
             background-image: url('assets/marco-floral.png'); 
-            background-size: cover;
+            /* Ajuste para que la imagen encaje en la pantalla del celular sin recortarse */
+            background-size: 100% 100%; 
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -264,6 +264,11 @@
             .count-box { min-width: 60px; padding: 10px; }
             .map-box { height: 250px; }
             .calendar-wrapper { padding: 25px 15px; }
+            
+            /* Ajuste extra responsivo para la imagen de fondo en celulares muy alargados */
+            #envelope-screen {
+                background-size: contain; 
+            }
         }
     </style>
 </head>
