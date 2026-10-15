@@ -258,8 +258,8 @@
         }
 
         /* Divisor de flores entre cajas */
-        .flower-divider { width: 100%; display: flex; justify-content: center; margin: 22px 0; }
-        .flower-divider img { width: 100%; max-width: 220px; height: auto; display: block; pointer-events: none; user-select: none; }
+        .flower-divider { width: 100%; display: flex; justify-content: center; margin: 6px 0; }
+        .flower-divider img { width: 100%; max-width: 200px; height: auto; display: block; pointer-events: none; user-select: none; }
 
         /* Cajas Mujeres / Hombres */
         .gender-icon { width: 110px; height: 110px; object-fit: contain; margin-bottom: 15px; display: block; }
@@ -292,6 +292,9 @@
             .map-box { height: 250px; }
             .calendar-wrapper { padding: 25px 15px; }
         }
+    
+        /* Cajas consecutivas (Dress Code, Mujeres, Hombres) */
+        .stack-gap { margin-bottom: 16px; }
     </style>
 </head>
 <body>
@@ -425,7 +428,7 @@
         <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
 
         <!-- Dress Code -->
-        <section class="glass-card anim-element anim-fade-up">
+        <section class="glass-card stack-gap anim-element anim-fade-up">
             <div class="dc-badge delay-1">DRESS CODE</div>
             <div class="dc-subtitle delay-2">EL COLOR ES EL TEMA</div>
             
@@ -437,17 +440,11 @@
             </div>
         </section>
 
-        <!-- Adorno de flores -->
-        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
-
         <!-- Mujeres -->
-        <section class="glass-card anim-element anim-zoom">
+        <section class="glass-card stack-gap anim-element anim-zoom">
             <img class="gender-icon delay-1" src="assets/mujeres.png" alt="Mujeres">
             <div class="info-data delay-2">Mujeres</div>
         </section>
-
-        <!-- Adorno de flores -->
-        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
 
         <!-- Hombres -->
         <section class="glass-card anim-element anim-zoom">
