@@ -123,28 +123,28 @@
         .envelope {
             position: relative; width: 100%; height: 100%;
             border-radius: 8px;
-            background: linear-gradient(160deg, #ffffff 0%, #eceff1 100%);
-            box-shadow: 0 6px 14px rgba(120, 130, 140, 0.25);
+            background: linear-gradient(160deg, #fde8ef 0%, #f7cddb 100%);
+            box-shadow: 0 6px 14px rgba(214, 140, 165, 0.35);
             overflow: hidden;
         }
         .envelope::before { /* pliegues laterales e inferior */
             content: ''; position: absolute; inset: 0;
-            background: #f3f4f6;
+            background: #f9d6e2;
             clip-path: polygon(0 0, 50% 58%, 0 100%, 100% 100%, 50% 58%, 100% 0, 100% 100%, 0 100%);
             opacity: 0.9;
         }
         .envelope::after { /* sombra suave del pliegue inferior */
             content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
-            background: linear-gradient(to top, rgba(160,170,180,0.25), transparent);
+            background: linear-gradient(to top, rgba(214,140,165,0.30), transparent);
         }
         .front-flap {
             position: absolute; top: 0; left: 0; width: 100%; height: 62%;
-            background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+            background: linear-gradient(180deg, #fdeaf1 0%, #f5c3d4 100%);
             clip-path: polygon(0 0, 100% 0, 50% 100%);
             transform-origin: top;
             transition: transform 0.9s var(--transition-smooth);
             z-index: 4;
-            filter: drop-shadow(0 3px 3px rgba(0,0,0,0.12));
+            filter: drop-shadow(0 3px 3px rgba(190,110,140,0.25));
         }
         .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
 
@@ -169,7 +169,7 @@
 
         /* CAJAS SÓLIDAS ROSAS */
         .glass-card {
-            width: 100%; max-width: 600px; padding: 50px 30px; margin-bottom: 40px;
+            width: 100%; max-width: 600px; padding: 50px 30px; margin-bottom: 0;
             background: var(--box-pink); 
             border-radius: 20px; 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); text-align: center;
@@ -179,7 +179,7 @@
         /* Tipografía Unificada y Limpia (Serif) */
         .hero-tag { font-size: 14px; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
         .title-script { font-size: 55px; margin-bottom: 25px; line-height: 1.1; font-weight: 600; text-transform: uppercase; letter-spacing: 4px;}
-        .cursive-name { font-size: 24px; font-weight: 600; margin: 10px 0; line-height: 1.2; text-transform: uppercase; letter-spacing: 4px;}
+        .cursive-name { font-size: 26px; font-weight: 600; margin: 10px 0; line-height: 1.2; letter-spacing: 1px;}
         .body-serif { font-size: 17px; line-height: 1.7; font-weight: 400; font-style: italic; }
         .body-serif-normal { font-size: 16px; line-height: 1.6; font-weight: 500; }
         
@@ -257,6 +257,13 @@
             font-weight: 700; font-size: 20px; letter-spacing: 5px; margin-bottom: 10px;
         }
 
+        /* Divisor de flores entre cajas */
+        .flower-divider { width: 100%; display: flex; justify-content: center; margin: 22px 0; }
+        .flower-divider img { width: 100%; max-width: 220px; height: auto; display: block; pointer-events: none; user-select: none; }
+
+        /* Cajas Mujeres / Hombres */
+        .gender-icon { width: 110px; height: 110px; object-fit: contain; margin-bottom: 15px; display: block; }
+
         /* Formularios RSVP */
         .form-group { width: 100%; max-width: 400px; margin: 0 auto 15px auto; position: relative; z-index: 2; }
         .input-line {
@@ -329,6 +336,9 @@
             </p>
         </section>
 
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
         <!-- Fecha, Cuenta Regresiva y Calendario -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">El gran día</div>
@@ -358,6 +368,9 @@
             <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Ximena&dates=20261114T200000Z/20261115T020000Z&details=Celebremos+juntos+los+XV+A%C3%B1os+de+Ximena+en+Hacienda+La+Esmeralda." target="_blank" class="btn-solid delay-4">Agendar Evento</a>
         </section>
 
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
         <!-- Familia -->
         <section class="glass-card anim-element anim-zoom">
             <div class="info-title delay-1" style="margin-bottom: 25px;">Con la bendición de mis padres</div>
@@ -371,6 +384,9 @@
             <div class="cursive-name delay-4">Mariana Monroy</div>
         </section>
 
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
         <!-- Ubicación -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">Recepción</div>
@@ -381,6 +397,9 @@
             </div>
             <a href="https://maps.app.goo.gl/4Ng7Jij39QAVsV376" target="_blank" class="btn-solid delay-4">Ver en Maps</a>
         </section>
+
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
 
         <!-- Itinerario -->
         <section class="glass-card anim-element anim-zoom">
@@ -402,6 +421,9 @@
             </div>
         </section>
 
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
         <!-- Dress Code -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="dc-badge delay-1">DRESS CODE</div>
@@ -414,6 +436,27 @@
                 </p>
             </div>
         </section>
+
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
+        <!-- Mujeres -->
+        <section class="glass-card anim-element anim-zoom">
+            <img class="gender-icon delay-1" src="assets/mujeres.png" alt="Mujeres">
+            <div class="info-data delay-2">Mujeres</div>
+        </section>
+
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
+        <!-- Hombres -->
+        <section class="glass-card anim-element anim-zoom">
+            <img class="gender-icon delay-1" src="assets/hombres.png" alt="Hombres">
+            <div class="info-data delay-2">Hombres</div>
+        </section>
+
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
 
         <!-- Mesa de Regalos -->
         <section class="glass-card anim-element anim-zoom">
@@ -431,6 +474,9 @@
             <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/52024161" target="_blank" class="btn-solid btn-accent delay-4">Ver Mesa de Regalos</a>
         </section>
 
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
         <!-- Spotify Playlist -->
         <section class="glass-card anim-element anim-fade-up">
             <div class="info-title delay-1">Música</div>
@@ -446,6 +492,9 @@
             <a href="https://open.spotify.com/playlist/4DUfu7jAXbzNlSj9MpPHIF?si=e439b78e14724579&pt=1ae24e5fde4f28334a35b816248ef3f4" target="_blank" class="btn-solid delay-4">Agregar Canciones</a>
         </section>
 
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
+
         <!-- Galería -->
         <section class="glass-card anim-element anim-zoom">
             <div class="info-title delay-1">Momentos</div>
@@ -455,6 +504,9 @@
             </p>
             <a href="https://drive.google.com/drive/folders/1ed8oOYqTBvbqCOMcD-jzLntfRg1INgQ9?usp=sharing" target="_blank" class="btn-solid delay-4">Subir mis Fotos</a>
         </section>
+
+        <!-- Adorno de flores -->
+        <div class="flower-divider anim-element anim-zoom"><img src="assets/flores.png" alt=""></div>
 
         <!-- RSVP y Pases -->
         <section class="glass-card anim-element anim-fade-up" style="margin-bottom: 0;">
